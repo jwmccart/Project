@@ -27,6 +27,14 @@ section .ban {
   font-weight: bold;
 }
 
+#taskTable > tbody > tr {
+  border-left: 12px solid #eeee;
+}
+
+#taskTable > tbody > tr > tr.current-sprint {
+  border-left: 12px solid rgb(35,95,163);
+}
+
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
    background-color:  rgb(200,200,255);
 }

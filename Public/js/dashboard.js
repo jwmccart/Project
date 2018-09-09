@@ -83,6 +83,10 @@ var dashboardApp = new Vue({
       }
 
       return '$' + (val/1e6).toFixed(1) + ' M';
+    },
+    completeClass: function(task) {
+      if(task.perc_complete == 100) {return 'alert-success'}
+      if(task.current_sprint && task.hours_worked == 0) {return 'alert-running'}
     }
   }
 });
