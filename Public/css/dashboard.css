@@ -29,6 +29,7 @@ section .ban {
 
 #taskTable > tbody > tr {
   border-left: 12px solid #eeee;
+  cursoe: pointer;
 }
 
 #taskTable > tbody > tr > tr.current-sprint {

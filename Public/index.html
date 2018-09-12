@@ -61,7 +61,7 @@
       </div> <!-- end row 2, charts -->
 
       <div class="row">
-        <table id="taskTable" class="table table-striped table-sm table-bordered">
+        <table id="taskTable" class="table table-striped table-sm table-bordered table-hover">
           <thead>
             <tr>
               <th>&nbsp;</th>
@@ -79,7 +79,8 @@
             <tr v-for="task in tasks"
                 :key="task.id"
                 :id="'task-' + task.id"
-                :class="task.current_sprint ? 'current-sprint' : ' ' ">
+                :class="task.current_sprint ? 'current-sprint' : ' ' "
+                @click="gotoTask(task.id)">
               <td></td>
               <td>{{ task.title }}</td>
               <td>{{ task.type }}</td>
