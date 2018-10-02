@@ -25,6 +25,7 @@ class Work
     $date = new DateTime($this->start);
     $date->add(new DateInterval($interval));
     $this->stop = $date->format('Y-m-d H:i:s');
+
     $this->completion_estimate = intval($row['completion_estimate']);
   }
 public function create() {
@@ -68,6 +69,7 @@ public function create() {
 
       // 4.a. For each row, make a new work object
       $workItem =  new Work($row);
+
       array_push($arr, $workItem);
 
     }

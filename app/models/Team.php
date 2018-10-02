@@ -2,30 +2,29 @@
 class Team
 {
 
-  public $team_id;
+  public $id;
   public $name;
+  public $hourly_rate;
 
   public function __construct($data) {
-    $this->id = intval($row['id']);
+    $this->id = intval($data['id']);
+    $this->name = $data['name'];
+    $this->hourly_rate = floatval($data['hourly_rate']);
 
-    $this->team_id = intval($row['team_id']);
-    $this->name = intval($row['name']);
 
 
 
   }
-  public static function getWorkByTaskId(int $team_id) {
+  public static function fetchAll(int $data) {
     // 1. Connect to the database
     $db = new PDO(DB_SERVER, DB_USER, DB_PW);
 
     // 2. Prepare the query
-    $sql = 'SELECT * FROM Team ';
+    $sql = 'SELECT * FROM Teams ';
     $statement = $db->prepare($sql);
 
     // 3. Run the query
-    $success = $statement->execute(
-
-    );
+    $success = $statement->execute();
 
     // 4. Handle the results
     $arr = [];
