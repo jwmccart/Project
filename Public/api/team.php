@@ -6,7 +6,7 @@ require '../../app/common.php';
 
 
 //Fetch Work from database
-$teams = Team::featchAll();
+$teams = Team::fetchAll();
 
 //convert to JSON and print
 $json = json_encode($teams, JSON_PRETTY_PRINT);
