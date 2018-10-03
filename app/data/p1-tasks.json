@@ -1,5 +1,4 @@
 [
-
   {
     "id": 1,
     "title": "Build UI",
@@ -13,7 +12,6 @@
     "perc_complete": 95,
     "current_sprint" : true
   },
-
   {
     "id": 2,
     "title": "Update unit tests",
@@ -27,7 +25,6 @@
     "perc_complete": 100,
     "current_sprint" : true
   },
-
   {
     "id": 3,
     "title": "Write middleware",
@@ -40,9 +37,7 @@
     "hours_worked": 0,
     "perc_complete": 0,
     "current_sprint" : true
-
   },
-
   {
     "id": 4,
     "title": "Completion % not saving",
@@ -54,6 +49,6 @@
     "close_date": "",
     "hours_worked": 17,
     "perc_complete": 80,
-    "current_sprint": false
+    "current_sprint" : false
   }
 ]
