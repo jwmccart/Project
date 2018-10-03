@@ -20,16 +20,18 @@ var tasksApp = new Vue({
   },
   computed: {
     workSpan () {
-      return moment(this.workForm.stop)
-             .diff(moment(this.workForm.start), 'hours', true)
+      return moment(this.workForm.stop + ' ' + this.workForm.stop_time)
+             .diff(moment(this.workForm.start + ' ' + this.workForm.start_time), 'hours', true)
              .toFixed(1);
     }
   },
   methods: {
+  // TODO: Check validity
     handleWorkForm(e) {
-      e.preventDefault();
-
-      // TODO: Check validity
+      if (this.computed <= 0) {
+        console.error("invalid form");
+      }
+    
 
       console.log(e);
 
@@ -62,14 +64,19 @@ var tasksApp = new Vue({
     diffAsHours() {
       return 0 //moment().duration(end.diff(startTime)).asHours();
     },
-    datetimeFormat(d) {
+    dateFormat(d) {
       d = d || moment();
-      return moment(d).format('YYYY-MM-DD[T]HH:MM');
+      return moment(d).format('YYYY-MM-DD');
+    },
+    timeFormat(){
+      return moment().format('HH:mm');
     },
     getEmptyWorkForm() {
       return {
         start: this.datetimeFormat(),
+        start_time: this.timeFormat(),
         stop: this.datetimeFormat(),
+        stop_time: this.timeFormat(),
         teamList: null,
         completion_estimate: 0
       }
