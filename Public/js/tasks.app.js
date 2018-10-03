@@ -26,37 +26,40 @@ var tasksApp = new Vue({
     }
   },
   methods: {
-  // TODO: Check validity
     handleWorkForm(e) {
-      if (this.computed <= 0) {
-        console.error("invalid form");
+
+      // TODO: Check validity in a better way
+      if (this.workSpan <= 0) {
+        console.error('Cannot submit, invalid values');
+        return;
       }
-    
 
-      console.log(e);
-
-      // TODO: Calculate hours
-
-      // something like:  moment.duration(end.diff(startTime)).asHours();
-
-      //TODO: clone workForm
+      this.workForm.start_date = this.workForm.start + ' ' + this.workForm.start_time;
+      this.workForm.hours = this.workSpan;
+      // Stop field not used by the API
+      // this.workForm.stop_date = this.workForm.stop + ' ' + this.workForm.stop_time;
 
       const s = JSON.stringify(this.workForm);
 
-      //TODO: POST to remote server
+      console.log(s);
 
-      // fetch(url,)
-
-      // .then()
-
-      //TODO: Append result
-
-      this.work.push(JSON.parse(s));
+      // POST to remote server
+      fetch('api/work.php', {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        body: s // body data type must match "Content-Type" header
+      })
+      .then( response => response.json() )
+      .then( json => {this.work.push(json)})
+      .catch( err => {
+        console.error('WORK POST ERROR:');
+        console.error(err);
+      })
 
       // Reset workForm
-
       this.workForm = this.getEmptyWorkForm();
-
     },
     sumHours() {
       return this.work.reduce( (sum, current) => sum + current.hours, 0 )
@@ -64,55 +67,48 @@ var tasksApp = new Vue({
     diffAsHours() {
       return 0 //moment().duration(end.diff(startTime)).asHours();
     },
-    dateFormat(d) {
-      d = d || moment();
-      return moment(d).format('YYYY-MM-DD');
-    },
-    timeFormat(){
-      return moment().format('HH:mm');
-    },
     getEmptyWorkForm() {
       return {
-        start: this.datetimeFormat(),
-        start_time: this.timeFormat(),
-        stop: this.datetimeFormat(),
-        stop_time: this.timeFormat(),
-        teamList: null,
+        start: moment().format('YYYY-MM-DD'),
+        start_time: moment().format('HH:mm'),
+        stop: moment().format('YYYY-MM-DD'),
+        stop_time: moment().format('HH:mm'),
+        team_id: null,
+        task_id: this.task.id,
         completion_estimate: 0
       }
     },
     prettyDate(d) {
-      return moment(d).format('YYYY-MM-DD HH:MM')
+      return moment(d).format('YYYY-MM-DD HH:mm')
     }
   },
   created () {
-    // Populate workForm with default values
-    this.workForm = this.getEmptyWorkForm();
+
     // Do data fetch
     const url = new URL(window.location.href);
     const taskId = url.searchParams.get('taskId');
     console.log('Task: '+ taskId);
+    this.task.id = taskId;
 
     if (!taskId) {
       //TODO: Error? 404?
-
       //e.g., window.location = '404.html';
-
     }
 
+    // Populate workForm with default values
+    this.workForm = this.getEmptyWorkForm();
+
     // TODO: Fetch task-specific data
-
     // fetch('api/task?id=4')
-
     fetch('api/work.php?taskId='+taskId)
-
     .then( response => response.json() )
     .then( json => {tasksApp.work = json} )
     .catch( err => {
-      console.log('WORK FETCH ERROR:');
-      console.log(err);
+      console.error('WORK FETCH ERROR:');
+      console.error(err);
     })
 
+    // Fetch all teams, for the form
     fetch('api/team.php')
     .then( response => response.json() )
     .then( json => {tasksApp.teamList = json} )

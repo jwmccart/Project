@@ -1,20 +1,18 @@
 <!doctype html>
 <html lang="en">
-
   <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
     <!-- Bootstrap CSS -->
-
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
     <link rel="stylesheet" href="css/dashboard.css">
 
     <title>Project Dashboard</title>
   </head>
   <body>
+
 
     <main id="taskMain" class="container-fluid">
       <div class="row">
@@ -57,6 +55,7 @@
           <td>{{w.completion_estimate}}</td>
         </tbody>
       </table>
+
         <h5>Total Hours: <strong>{{ sumHours() }}</strong></h5>
 
         <!-- modal dialog showing task hours when clicked -->
@@ -64,6 +63,7 @@
         <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#workHoursModal">
           Launch demo modal
         </button> -->
+
         <!-- Modal -->
         <!-- <div class="modal fade" id="workHoursModal" tabindex="-1" role="dialog" aria-labelledby="workHoursModalTitle" aria-hidden="true">
           <div class="modal-dialog modal-dialog-centered" role="document">
@@ -84,20 +84,26 @@
                 <form @submit.prevent="handleWorkForm">
                   <div class="form-group row">
                     <label for="start" class="col-sm-1 col-form-label">Start: </label>
-                    <div class="col-sm-6">
-                      <input type="datetime-local" id="start" v-model="workForm.start" class="form-control" required>
+                    <div class="col-sm-3">
+                      <input type="date" id="start" v-model="workForm.start" class="form-control" required>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="time" id="start_time" v-model="workForm.start_time" class="form-control" required>
                     </div>
                   </div>
                   <div class="form-group row">
                     <label for="stop" class="col-sm-1 col-form-label">End: </label>
-                    <div class="col-sm-6">
-                      <input type="datetime-local" id="stop" v-model="workForm.stop" class="form-control" required>
+                    <div class="col-sm-3">
+                      <input type="date" id="stop" v-model="workForm.stop" class="form-control" required>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="time" id="stop_time" v-model="workForm.stop_time" class="form-control" required>
                     </div>
                   </div>
                   <p>Logged work period is <strong>{{workSpan}} hours</strong></p>
-
                   <div class="form-group row">
                     <label for="completion_estimate" class="col-sm-2 col-form-label">Completion estimate: </label>
+
                     <div class="col-sm-4 input-group">
                       <input type="number" id="completion_estimate" v-model.lazy="workForm.completion_estimate" class="form-control" min="2" max="100" step="1" required>
                       <div class="input-group-append">
@@ -105,16 +111,18 @@
                       </div>
                     </div>
                   </div>
+
                   <div class="form-group row">
                     <label for="team" class="col-sm-1 col-form-label">Team: </label>
                     <div class="col-sm-6">
-                      <select id="team" v-model="workForm.team" class="form-control" required>
+                      <select id="team" v-model="workForm.team_id" class="form-control" required>
                         <option v-for="t in teamList"
                         :key="t.id"
                         :value="t.id">{{ t.name }}</option>
                       </select>
                     </div>
                   </div>
+
                   <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
                   <button type="submit" class="btn btn-primary">Save changes</button>
                 </form>
@@ -122,7 +130,9 @@
             </div>
           </div>
         </div> -->
+
     </main>
+
     <!-- We need Bootstrap's modal JS, thus we also need jQuery -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> -->
@@ -134,5 +144,6 @@
     <!-- development version, includes helpful console warnings -->
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="js/tasks.app.js"></script>
+
   </body>
 </html>

@@ -1,4 +1,5 @@
 <?php
+
 class Work
 {
   public $id;
@@ -22,33 +23,31 @@ class Work
     $hours = floor($this->hours);
     $mins = intval(($this->hours - $hours) * 60); // Take advantage of one decimal place
     $interval = 'PT'. ($hours ? $hours.'H' : '') . ($mins ? $mins.'M' : '');
+
     $date = new DateTime($this->start);
     $date->add(new DateInterval($interval));
     $this->stop = $date->format('Y-m-d H:i:s');
 
     $this->completion_estimate = intval($row['completion_estimate']);
   }
-public function create() {
-  $db = new PDO(DB_SERVER, DB_USER, DB_PW);
-  $sql = 'INSERT INTO Work (task_id, team_id, start_date, hours, completion_estimate) VALUES (?,?,?,?,?)';
 
-  $statement = $db->prepare($sql);
+  public function create() {
+    $db = new PDO(DB_SERVER, DB_USER, DB_PW);
 
-  $success = $statenent -> execute ([
-    $this->task_id,
-    $this->team_id,
-    $this->start,
-    $this->hours,
-    $this->completion_estimate
-  ]);
+    $sql = 'INSERT Work (task_id, team_id, start_date, hours, completion_estimate)
+            VALUES (?, ?, ?, ?, ?)';
 
-  if (!success) {
-    // TODO: Better error handling
-    die('SQL error');
+    $statement = $db->prepare($sql);
+    $success = $statement->execute([
+      $this->task_id,
+      $this->team_id,
+      $this->start,
+      $this->hours,
+      $this->completion_estimate
+    ]);
+
+    $this->id = $db->lastInsertId();
   }
-
-  $this->id = $db->lastInsertId();
-}
 
   public static function getWorkByTaskId(int $taskId) {
     // 1. Connect to the database
@@ -56,6 +55,7 @@ public function create() {
 
     // 2. Prepare the query
     $sql = 'SELECT * FROM Work WHERE task_id = ?';
+
     $statement = $db->prepare($sql);
 
     // 3. Run the query
@@ -66,17 +66,14 @@ public function create() {
     // 4. Handle the results
     $arr = [];
     while ($row = $statement->fetch(PDO::FETCH_ASSOC)) {
-
       // 4.a. For each row, make a new work object
       $workItem =  new Work($row);
 
       array_push($arr, $workItem);
-
     }
 
     // 4.b. return the array of work objects
+
     return $arr;
-
   }
-
 }
