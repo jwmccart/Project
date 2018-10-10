@@ -27,3 +27,4 @@ class WorkHoursReport
     $arr = $statement-fetchAll(PDO::FETCH_ASSOC);
 
     return $arr;
+}}
