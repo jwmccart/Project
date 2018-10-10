@@ -12,4 +12,5 @@ require 'environment.php';
 
 /** MODELS **/
 require 'models/Work.php';
+require 'models/WorkHoursReport.php';
 require 'models/Team.php';
